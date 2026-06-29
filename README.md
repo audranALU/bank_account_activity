@@ -1,24 +1,31 @@
 # Bank Account Activity
 
-A `BankAccount` class built with **Test-Driven Development (TDD)** using **NUnit**, for the
-ALU Programming in C# group activity.
+We have `BankAccount` class built with **Test-Driven Development (TDD)** using **NUnit**.
 
-## Requirements implemented
+## What it does
+
+The `BankAccount` class has three methods:
 
 - `Deposit(decimal amount)` — adds money to the account
-- `Withdraw(decimal amount)` — removes money from the account
+- `Withdraw(decimal amount)` — takes money out of the account
 - `GetBalance()` — returns the current balance
-- No negative or zero deposits / withdrawals (throws `ArgumentException`)
-- No overdrafts — cannot withdraw more than the balance (throws `InvalidOperationException`)
+
+It also enforces these rules:
+
+- Deposits must be greater than zero (no zero or negative deposits)
+- Withdrawals must be greater than zero (no zero or negative withdrawals)
+- You cannot withdraw more than the balance (no overdrafts)
 
 ## Project structure
 
 ```
-BankAccountActivity.sln
-├── src/BankAccount/            # the BankAccount class library
-│   └── BankAccount.cs
-└── tests/BankAccount.Tests/    # NUnit test project
-    └── BankAccountTests.cs     # 15 tests
+BankAccountActivity.slnx          # solution file
+├── BankAccount/                  # the BankAccount class
+│   ├── BankAccount.cs
+│   └── BankAccount.csproj
+└── BankAccount.Tests/            # NUnit tests
+    ├── BankAccountTests.cs       # 5 tests
+    └── BankAccount.Tests.csproj
 ```
 
 ## How to build and run the tests
@@ -28,22 +35,15 @@ dotnet build      # compile the solution
 dotnet test       # run all NUnit tests
 ```
 
-## TDD approach (Red → Green → Refactor)
+## The tests
 
-1. **Red** — the tests in `BankAccountTests.cs` were written first and failed to compile
-   because the `BankAccount` class did not exist yet.
-2. **Green** — the minimal implementation in `BankAccount.cs` was written to make all 15
-   tests pass.
-3. **Refactor** — the code was tidied (clear validation, XML doc comments) while keeping
-   the tests green.
+`BankAccountTests.cs` checks the rules of the account:
 
-## Suggested two-person task split
+| Test                             | What it checks                                                      |
+| -------------------------------- | ------------------------------------------------------------------- |
+| `Deposit_Zero_Fails`             | Depositing 0 Fails `ArgumentException`                              |
+| `Deposit_NegativeAmount_Fails`   | Depositing a negative amount Fails `ArgumentException`              |
+| `Withdraw_Zero_Fails`            | Withdrawing 0 Fails `ArgumentException`                             |
+| `Withdraw_NegativeAmount_Fails`  | Withdrawing a negative amount Fails `ArgumentException`             |
+| `Withdraw_MoreThanBalance_Fails` | Withdrawing more than the balance Fails `InvalidOperationException` |
 
-The work divides cleanly into two halves so each member contributes:
-
-| Member       | Responsibility                                                                 |
-|--------------|--------------------------------------------------------------------------------|
-| **Person A** | Project setup + `Deposit` and `GetBalance`: tests and implementation, plus the "no negative/zero deposit" rule. |
-| **Person B** | `Withdraw`: tests and implementation, plus the "no negative/zero withdrawal" and "no overdraft" rules. |
-
-Both members follow the same Red → Green → Refactor cycle for their part.
