@@ -13,7 +13,7 @@ The `BankAccount` enforces these rules:
 ## How to build and run the tests
 
 ```bash
-dotnet build      # compile the solution
-dotnet test       # run all NUnit tests
+dotnet build      
+dotnet test      
 ```
 
